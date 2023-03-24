@@ -33,7 +33,7 @@ percent:
     
 jmp_table:
     dq binary                           ; %b
-    dq case_default                     ; %c
+    dq char                     ; %c
     dq decimal                          ; %d
     dq 'o' - 'd' - 1 dup(case_default)
     dq octal                            ; %o
