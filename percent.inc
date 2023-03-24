@@ -35,4 +35,7 @@ jmp_table:
     dq binary                           ; %b
     dq case_default                     ; %c
     dq case_default                     ; %d
-    dq 'x' - 'd' - 1 dup(case_default)  ; other %
+    dq 'o' - 'd' - 1 dup(case_default)
+    dq octal                            ; %o
+    dq 'x' - 'o' - 1 dup(case_default)
+    dq hex                              ; %x
