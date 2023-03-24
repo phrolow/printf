@@ -27,6 +27,7 @@ printf:
 
         mov rsi, rbx                    ; new begin of substring
         add rsi, 2                         ; next char is begin of substr
+        jne .Next
 
 .CheckEnd:
         cmp al, 0
