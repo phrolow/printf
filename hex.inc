@@ -5,7 +5,7 @@ hex     push rbp
         
         mov r9, [rbp + 32 + r8]     ; arg from printf call
 
-        mov rcx, 0x10               ; num of chars in out (I'll fix zeros in start)
+        mov rcx, 0x10               ; num of chars in out 
         mov rsi, buf                ; output buffer
 
 .Next:  mov rdx, 0xF000000000000000                 ; rdx will be current 4 bits

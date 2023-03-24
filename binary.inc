@@ -5,7 +5,7 @@ binary  push rbp
         
         mov r9, [rbp + 32 + r8]     ; arg from printf call
 
-        mov rcx, 0x40               ; num of chars in out (I'll fix zeros in start)
+        mov rcx, 0x40               ; num of chars in out 
         mov rsi, buf                ; output buffer
 
 .Next:  mov rdx, 0x8000000000000000                   ; rdx will be current bit
@@ -29,9 +29,8 @@ binary  push rbp
         loop .Next                      
 .BreakLoop:
         mov rax, 1                  ; 1st syscall - write()
-        mov rdx, 0x40               ; length of write()
         add rsi, rcx                ; start output from last non-zero digit
-        mov rdx, 0x40
+        mov rdx, 0x40               ; length of write()
         sub rdx, rcx                ; length of output
 
         syscall
