@@ -5,17 +5,17 @@ printf:
         mov rbp, rsp
 
         mov rdi, 1                      ; stdin
-        mov rcx, 16                     ; arg address counter
+        mov r8, 16                     ; arg address counter
 
-        mov rsi, [rbp + rcx]              ; current char
+        mov rsi, [rbp + r8]              ; current char
         mov rbx, rsi                    ; rsi is begin of last substring, rbx is current char
         dec rbx                         ; loop will compensate it
 
-@@Loop:
+.Next:
         inc rbx                         ; string iterator
         mov al, [rbx]                  ; current char
         cmp al, '%'                    ; stop on '%'
-        jne CheckEnd
+        jne .CheckEnd
 
         mov rdx, rbx                    ; calculate length of output
         sub rdx, rsi
@@ -23,14 +23,14 @@ printf:
 
         syscall
 
-        mov rsi, rbx                    ; new begin of substring
-        inc rsi                         ; next char is begin of substr
-
         call percent
 
-CheckEnd:
+        mov rsi, rbx                    ; new begin of substring
+        add rsi, 2                         ; next char is begin of substr
+
+.CheckEnd:
         cmp al, 0
-        jne @@Loop
+        jne .Next
 
         mov rdx, rbx
         sub rdx, rsi                    ; calculate output length

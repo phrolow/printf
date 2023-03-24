@@ -1,16 +1,17 @@
 BITS 64
 
-
 global _start
 
 section .text
-    %include "printf.inc"
-    %include "percent.inc"
+    %include "binary.inc"
     %include "default.inc"
+    %include "percent.inc"
+    %include "printf.inc"
 
     _start:
         mov rax, msg
 
+        push 13
         push rax
 
         call printf
@@ -20,4 +21,5 @@ section .text
         syscall
 
 section .data
-    msg db "ochko %kirilla", 0xa, 0x0
+    msg db "%c", 0xa, "kirilla", 0xa, 0x0
+    buf db 0x100 dup(0)
