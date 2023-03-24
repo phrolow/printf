@@ -1,5 +1,14 @@
 BITS 64
 
+    %include "binary.inc"
+    %include "char.inc"
+    %include "decimal.inc"
+    %include "default.inc"
+    %include "hex.inc"
+    %include "octal.inc"
+    %include "specifier.inc"
+    %include "percent.inc"
+
 printf: 
         push rbp
         mov rbp, rsp
@@ -23,10 +32,11 @@ printf:
 
         syscall
 
-        call percent
+        call specifier
 
+        inc rbx                         ; increase pointer - to skip '%' and letter after it
         mov rsi, rbx                    ; new begin of substring
-        add rsi, 2                         ; next char is begin of substr
+        inc rsi                         ; next char is begin of substr
         jne .Next
 
 .CheckEnd:
