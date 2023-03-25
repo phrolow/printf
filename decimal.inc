@@ -3,15 +3,15 @@ BITS 64
 decimal push rbp
         mov rbp, rsp                ; stack frame
         
-        mov rax, [rbp + 32 + r8]     ; arg from printf call
+        mov eax, [rbp + 32 + r8]     ; arg from printf call
 
-        mov r9, 0x8000000000000000 ; bit mast 4 1st bit
-        and r9, rax                 ; get sign
-        shr r9, 0x3f               ; move bit to end
+        mov r9d, 0x80000000              ; bit mask for 1st bit
+        and r9d, eax                 ; get sign
+        shr r9d, 0x1f               ; move bit to end
 
-        cmp r9, 0
-        je .skip_neg                ; if rax > 0, we don't need to neg it
-        neg rax                      ; to unsigned
+        cmp r9d, 0
+        je .skip_neg                ; if eax > 0, we don't need to neg it
+        neg eax                      ; to unsigned
 
 .skip_neg:
         mov rcx, 19                 ; num of chars in out
@@ -26,8 +26,8 @@ decimal push rbp
         add dl, '0'                 ; to char
         mov byte [rsi + rcx], dl    ; bit to buffer
 
-        cmp rax, 0
-        je .BreakLoop                   ; if our num lesser than r9, break loop
+        cmp eax, 0
+        je .BreakLoop                   ; if our num lesser than r9d, break loop
 
         loop .Next                      
 .BreakLoop:
@@ -36,7 +36,7 @@ decimal push rbp
         mov rdx, 23                 ; length of write()
         sub rdx, rcx                ; length of output
 
-        cmp r9, 1
+        cmp r9d, 1
         jne .skip_minus
 
         dec rsi
