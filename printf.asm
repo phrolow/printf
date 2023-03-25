@@ -1,5 +1,14 @@
 BITS 64
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; Custom realisation of std::printf
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; Entry:    _cdecl
+; Exit:     -
+; Destroys: -
+; Expects:  -
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 global _printf
 
 section .text

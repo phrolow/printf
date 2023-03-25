@@ -1,17 +1,26 @@
 BITS 64
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; %d specifier
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; Entry:    32-bit int in stack
+; Exit:     -
+; Destroys: rax, rcx, rdx, rsi, rdi, r9
+; Expects:  r8 for calculating stack arg offset
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 decimal push rbp
         mov rbp, rsp                ; stack frame
         
-        mov eax, [rbp + 32 + r8]     ; arg from printf call
+        mov eax, [rbp + 32 + r8]    ; arg from printf call
 
-        mov r9d, 0x80000000              ; bit mask for 1st bit
-        and r9d, eax                 ; get sign
+        mov r9d, 0x80000000         ; bit mask for 1st bit
+        and r9d, eax                ; get sign
         shr r9d, 0x1f               ; move bit to end
 
         cmp r9d, 0
         je .skip_neg                ; if eax > 0, we don't need to neg it
-        neg eax                      ; to unsigned
+        neg eax                     ; to unsigned
 
 .skip_neg:
         mov rcx, 19                 ; num of chars in out

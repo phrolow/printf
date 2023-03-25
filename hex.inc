@@ -1,5 +1,14 @@
 BITS 64
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; %x specifier
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; Entry:    int in stack
+; Exit:     -
+; Destroys: rax, rcx, rdx, rsi, rdi, r9
+; Expects:  r8 for calculating stack arg offset
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 hex     push rbp
         mov rbp, rsp                ; stack frame
         
@@ -8,14 +17,14 @@ hex     push rbp
         mov rcx, 0x10               ; num of chars in out 
         mov rsi, buf                ; output buffer
 
-.Next:  mov rdx, 0xF000000000000000                 ; rdx will be current 4 bits
+.Next:  mov rdx, 0xF000000000000000 ; rdx will be current 4 bits
 
         dec rcx
         shl rcx, 2         
-        shr rdx, cl		            ; set current bit, is "shr rdx, cl * 4"
+        shr rdx, cl		    ; set current bit, is "shr rdx, cl * 4"
         mov rax, rdx                ; rax is power of 2, matching current bit. If rax is bigger than num, loop will be broken
 
-        and rdx, r9		            ; get current bit of ax
+        and rdx, r9		    ; get current bit of ax
 
         add cl, 4
         rol rdx, cl                 ; bit to last digit
@@ -32,7 +41,7 @@ hex     push rbp
         mov byte [rsi + rcx], dl    ; bit to buffer
 
         cmp rax, r9
-        ja .BreakLoop                   ; if our num lesser than rax, break loop
+        ja .BreakLoop               ; if our num lesser than rax, break loop
 
         loop .Next                      
 .BreakLoop:

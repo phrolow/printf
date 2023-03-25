@@ -1,5 +1,14 @@
 BITS 64
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; Actually printf function
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; Entry:    stack
+; Exit:     -
+; Destroys: rax, rbx, rcx, rdx, rsi, rdi, r8, r9
+; Expects:  -
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     %include "binary.inc"
     %include "char.inc"
     %include "decimal.inc"
@@ -12,19 +21,19 @@ BITS 64
 
 printf: 
         push rbp
-        mov rbp, rsp
+        mov rbp, rsp                    ; stack frame
 
         mov rdi, 1                      ; stdin
-        mov r8, 24                     ; arg address counter
+        mov r8, 24                      ; arg address counter
 
-        mov rsi, [rbp + r8]              ; current char
+        mov rsi, [rbp + r8]             ; current char
         mov rbx, rsi                    ; rsi is begin of last substring, rbx is current char
         dec rbx                         ; loop will compensate it
 
 .Next:
         inc rbx                         ; string iterator
-        mov al, [rbx]                  ; current char
-        cmp al, '%'                    ; stop on '%'
+        mov al, [rbx]                   ; current char
+        cmp al, '%'                     ; stop on '%'
         jne .CheckEnd
 
         mov rdx, rbx                    ; calculate length of output

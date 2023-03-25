@@ -1,5 +1,14 @@
 BITS 64
 
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; %s specifier
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+; Entry:    64-bit address in stack
+; Exit:     -
+; Destroys: rax, rcx, rdx, rsi, rdi
+; Expects:  r8 for calculating stack arg offset
+;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 string  push rbp
         mov rbp, rsp                ; stack frame
 
@@ -7,7 +16,7 @@ string  push rbp
 
         xor rdx, rdx                ; length
 
-.next:  cmp byte [rsi + rdx], 0           ; if current char is '\0'
+.next:  cmp byte [rsi + rdx], 0     ; if current char is '\0'
         je .break
 
         inc rdx
