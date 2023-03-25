@@ -6,6 +6,12 @@ specifier:
 
     add r8, 8                  ; next arg
 
+    cmp r8, 72
+    jne .not_printf_address     ; if r8 points at printf call
+
+    add r8, 8
+
+.not_printf_address:
     xor rdx, rdx
     mov dl, [rbx + 1]               ; char after %
 
@@ -37,12 +43,3 @@ specifier:
     pop rbp                     ; stack frame
     ret
 ; csdxob\%
-    
-jmp_table:
-    dq binary                           ; %b
-    dq char                     ; %c
-    dq decimal                          ; %d
-    dq 'o' - 'd' - 1 dup(case_default)
-    dq octal                            ; %o
-    dq 'x' - 'o' - 1 dup(case_default)
-    dq hex                              ; %x

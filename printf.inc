@@ -7,6 +7,7 @@ BITS 64
     %include "hex.inc"
     %include "octal.inc"
     %include "specifier.inc"
+    %include "string.inc"
     %include "percent.inc"
 
 printf: 
@@ -14,7 +15,7 @@ printf:
         mov rbp, rsp
 
         mov rdi, 1                      ; stdin
-        mov r8, 16                     ; arg address counter
+        mov r8, 24                     ; arg address counter
 
         mov rsi, [rbp + r8]              ; current char
         mov rbx, rsi                    ; rsi is begin of last substring, rbx is current char

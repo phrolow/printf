@@ -1,6 +1,6 @@
 BITS 64
 
-percent         sub r8, 16      ; "put" arg back to stack
+percent         sub r8, 8      ; "put" arg back to stack
 
                 mov rax, 1          ; 1st syscall - write()
                 mov rdx, 1          ; length

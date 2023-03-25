@@ -7,10 +7,9 @@ string  push rbp
 
         xor rdx, rdx                ; length
 
-.next:  cmp byte [rsi], 0           ; if current char is '\0'
+.next:  cmp byte [rsi + rdx], 0           ; if current char is '\0'
         je .break
 
-        inc rsi
         inc rdx
         jmp .next
 
